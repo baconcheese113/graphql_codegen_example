@@ -1,0 +1,27 @@
+name: graphql_codegen_example
+description: Simple example using graphql_flutter and graphql_codegen with Relay-like structure
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  graphql: ^5.1.1
+  graphql_flutter: ^5.1.1-beta.3
+  json_annotation: ^4.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.2.0 # Used with graphql_codegen for generating Dart type files
+  json_serializable: ^6.3.1 # Used with graphql_codegen for generating the serializers
+  graphql_codegen: ^0.10.0-beta.5 # graphql_codegen is only used for the generation, so it isn't needed run-time
+
+
+
+flutter:
+  uses-material-design: true

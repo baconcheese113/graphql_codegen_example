@@ -1,0 +1,32 @@
+# would usually be on Viewer or Node but need to use Query with this schema
+fragment launchesTab_query on Query {
+  launches(limit: 150) {
+    ...launchCard_launch
+  }
+}
+
+fragment launchCard_launch on Launch {
+  details
+  id
+  launch_date_utc
+  launch_site {
+    site_name_long
+  }
+  launch_success
+  links {
+    flickr_images
+  }
+  mission_name
+  rocket {
+    rocket_name
+    second_stage {
+      payloads {
+        payload_type
+        manufacturer
+        nationality
+        reused
+        payload_mass_kg
+      }
+    }
+  }
+}

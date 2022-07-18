@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          scalars:
+            Date:
+              type: DateTime
+          clients:
+            - graphql
+            - graphql_flutter
+          outputDirectory: __generated__
