@@ -1,7 +1,3 @@
 query HomeScreen {
-  # FIXME removing this prevents the query from building
-  launches {
-    id
-  }
   ...launchesTab_query
 }

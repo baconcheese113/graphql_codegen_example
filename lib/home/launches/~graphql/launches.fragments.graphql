@@ -6,19 +6,17 @@ fragment launchesTab_query on Query {
 }
 
 fragment launchCard_launch on Launch {
-  details
+  ...launchCardBody_launch
   id
   launch_date_utc
   launch_site {
     site_name_long
   }
   launch_success
-  links {
-    flickr_images
-  }
   mission_name
   rocket {
-    rocket_name
+    # just to test aliases
+    rocketName: rocket_name
     second_stage {
       payloads {
         payload_type
@@ -29,4 +27,28 @@ fragment launchCard_launch on Launch {
       }
     }
   }
+}
+
+fragment launchCardBody_launch on Launch {
+  details
+  links {
+    flickr_images
+  }
+  rocket {
+    ...launchCardPayloads_rocket
+    rocket_name
+  }
+}
+
+fragment launchCardPayloads_rocket on LaunchRocket {
+    rocket_name
+    second_stage {
+      payloads {
+        payload_type
+        manufacturer
+        nationality
+        reused
+        payload_mass_kg
+      }
+    }
 }
