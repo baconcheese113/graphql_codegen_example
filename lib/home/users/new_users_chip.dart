@@ -15,7 +15,7 @@ class NewUsersChip extends HookWidget {
     );
 
     final noDataWidget = validateResult(newUsersSub);
-    if (noDataWidget != null) return noDataWidget;
+    if (noDataWidget != null) return const SizedBox();
 
     final count = newUsersSub.parsedData!.users_aggregate.aggregate!.count!;
     if (initialCount.value == 0) initialCount.value = count;

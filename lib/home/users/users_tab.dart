@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:graphql_codegen_example/graphql/__generated__/schema.graphql.dart';
-import 'package:graphql_codegen_example/home/users/new_users_chip.dart';
 import 'package:graphql_codegen_example/home/users/user_card.dart';
+import 'package:graphql_codegen_example/home/users/users_provider.dart';
 import 'package:graphql_codegen_example/home/users/~graphql/__generated__/users_tab.query.graphql.dart';
 import 'package:graphql_codegen_example/utils.dart';
+import 'package:provider/provider.dart';
 
 // This widget hierarchy shows how to use graphql_codegen hooks
 class UsersTab extends HookWidget {
@@ -12,15 +12,13 @@ class UsersTab extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final limit = useState(100);
-    final orderBy = useState([
-      Input$users_order_by(timestamp: Enum$order_by.desc_nulls_last),
-    ]);
+    final usersProvider = Provider.of<UsersProvider>(context);
+    print(">>> usersProvider.limit ${usersProvider.limit}");
 
     final usersQuery = useQuery$UsersTab(Options$Query$UsersTab(
       variables: Variables$Query$UsersTab(
-        limit: limit.value,
-        orderBy: orderBy.value,
+        limit: usersProvider.limit,
+        orderBy: usersProvider.orderBy,
       ),
     ));
     final result = usersQuery.result;
@@ -30,34 +28,35 @@ class UsersTab extends HookWidget {
     final data = result.parsedData!;
 
     final userLimitOptions = [1, 10, 50, 100]
-        .map((limit) => DropdownMenuItem(
-              value: limit,
-              child: Text("$limit"),
+        .map((opt) => DropdownMenuItem(
+              value: opt,
+              child: Text("$opt"),
             ))
         .toList();
     final cardList = data.users.map((u) => UserCard(usersFrag: u)).toList();
 
     return Column(
       children: [
-        const NewUsersChip(),
+        // const NewUsersChip(), // Sub doesn't work in this schema
         Row(
           children: [
             const Text("Limit "),
             DropdownButton<int>(
-              value: limit.value,
+              value: usersProvider.limit,
               icon: const Icon(Icons.arrow_downward),
               items: userLimitOptions,
-              onChanged: (newLimit) => newLimit != null ? limit.value = newLimit : null,
+              onChanged: (newLimit) => newLimit != null ? usersProvider.setLimit(newLimit) : null,
             ),
           ],
         ),
         Expanded(
-            child: RefreshIndicator(
-          child: ListView(children: cardList),
-          onRefresh: () async {
-            await usersQuery.refetch();
-          },
-        )),
+          child: RefreshIndicator(
+            child: ListView(children: cardList),
+            onRefresh: () async {
+              await usersQuery.refetch();
+            },
+          ),
+        ),
       ],
     );
   }

@@ -2,19 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_codegen_example/graphql/__generated__/schema.graphql.dart';
 import 'package:graphql_codegen_example/home/users/add_user_graphic.dart';
+import 'package:graphql_codegen_example/home/users/users_provider.dart';
 import 'package:graphql_codegen_example/home/users/~graphql/__generated__/add_user.mutation.graphql.dart';
+import 'package:provider/provider.dart';
 
 class AddUserScreen extends HookWidget {
   const AddUserScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final usersProvider = Provider.of<UsersProvider>(context);
     final name = useState("");
     final rocket = useState("");
     final exception = useState("");
     final mounted = useIsMounted();
 
-    final addUser = useMutation$AddUser();
+    final addUser = useMutation$AddUser(
+      WidgetOptions$Mutation$AddUser(update: (cache, result) {
+        final user = result?.parsedData?.insert_users?.returning[0];
+        if (user == null) return;
+        usersProvider.onAdd(cache, user);
+      }),
+    );
     final canSubmit = name.value.isNotEmpty && rocket.value.isNotEmpty;
 
     void handleSubmit() async {

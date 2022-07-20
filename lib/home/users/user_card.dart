@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_codegen_example/graphql/__generated__/schema.graphql.dart';
 import 'package:graphql_codegen_example/home/users/user_card_body.dart';
+import 'package:graphql_codegen_example/home/users/users_provider.dart';
 import 'package:graphql_codegen_example/home/users/~graphql/__generated__/delete_user.mutation.graphql.dart';
 import 'package:graphql_codegen_example/home/users/~graphql/__generated__/users.fragments.graphql.dart';
+import 'package:provider/provider.dart';
 
 class UserCard extends HookWidget {
   final Fragment$userCard_users usersFrag;
@@ -11,7 +13,15 @@ class UserCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deleteUser = useMutation$DeleteUser();
+    final usersProvider = Provider.of<UsersProvider>(context);
+    final deleteUser = useMutation$DeleteUser(
+      WidgetOptions$Mutation$DeleteUser(update: (cache, result) {
+        // Need to update cache with response manually
+        // Other option is refetch everything, but it's not very data efficient
+        final id = result!.parsedData!.delete_users!.returning[0].id;
+        usersProvider.onDelete(cache, id);
+      }),
+    );
     final loading = useState(false);
     final mounted = useIsMounted();
 
