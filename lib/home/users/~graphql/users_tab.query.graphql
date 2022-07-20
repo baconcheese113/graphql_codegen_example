@@ -1,0 +1,5 @@
+query UsersTab($limit: Int, $orderBy: [users_order_by!]) {
+  users(limit: $limit, order_by: $orderBy) {
+    ...userCard_users
+  }
+}

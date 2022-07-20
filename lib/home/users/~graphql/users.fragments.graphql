@@ -1,0 +1,14 @@
+# Should be type `User` but they made the schema weird
+fragment userCard_users on users {
+  ...userCardBody_users
+  id
+  name
+  rocket
+  timestamp
+  twitter
+}
+
+fragment userCardBody_users on users {
+  name
+  rocket
+}

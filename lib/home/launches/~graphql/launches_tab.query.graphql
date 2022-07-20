@@ -1,0 +1,5 @@
+query LaunchesTab {
+  launches(limit: 150) {
+    ...launchCard_launch
+  }
+}

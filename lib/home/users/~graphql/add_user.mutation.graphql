@@ -1,0 +1,7 @@
+mutation AddUser($user: users_insert_input!) {
+  insert_users(objects: [$user]) {
+    returning {
+      ...userCard_users
+    }
+  }
+}

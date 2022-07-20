@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_codegen_example/home/home_screen.dart';
+import 'package:graphql_codegen_example/home/users/add_user_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class App extends StatelessWidget {
@@ -16,6 +17,8 @@ class App extends StatelessWidget {
           title: "SpaceX DB",
           onGenerateRoute: (settings) {
             switch (settings.name) {
+              case '/add-user':
+                return MaterialPageRoute(builder: (_) => const AddUserScreen());
               case '/':
               default:
                 return MaterialPageRoute(builder: (_) => const HomeScreen());

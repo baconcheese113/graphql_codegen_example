@@ -1,10 +1,3 @@
-# would usually be on Viewer or Node but need to use Query with this schema
-fragment launchesTab_query on Query {
-  launches(limit: 150) {
-    ...launchCard_launch
-  }
-}
-
 fragment launchCard_launch on Launch {
   ...launchCardBody_launch
   id

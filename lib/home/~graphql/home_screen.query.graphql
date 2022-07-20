@@ -1,3 +1,0 @@
-query HomeScreen {
-  ...launchesTab_query
-}

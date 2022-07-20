@@ -1,0 +1,7 @@
+subscription NewUsersChip {
+  users_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

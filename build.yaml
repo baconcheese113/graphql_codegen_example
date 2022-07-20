@@ -3,10 +3,23 @@ targets:
     builders:
       graphql_codegen:
         options:
+          # In this schema it uses 2 scalars for DateTimes and 1 for uuid
+          #these convert the scalars to Dart types automatically
           scalars:
             Date:
               type: DateTime
+            timestamptz:
+              type: DateTime
+            uuid:
+              type: String
+          # graphql_codegen will generate classes following both of these
+          # libraries conventions
           clients:
             - graphql
             - graphql_flutter
+          # Where to put the generated types, in this case a folder in the
+          # relative directory of the graphql files called __generated__
           outputDirectory: __generated__
+          # In this schema sending a null value in a mutation throws a NON-NULL
+          # violation error, this option will strip null values from Inputs
+          includeIfNullOnInput: false
