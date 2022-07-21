@@ -17,6 +17,22 @@ class AddUserScreen extends HookWidget {
     final exception = useState("");
     final mounted = useIsMounted();
 
+    return Mutation$AddUser$Widget(
+      builder: (runMutation, result) {
+        return TextButton(
+            onPressed: () {
+              runMutation(Variables$Mutation$AddUser(
+                user: Input$users_insert_input(
+                  name: name.value,
+                  rocket: rocket.value,
+                  twitter: "https://twitter.com/VerminSupreme",
+                ),
+              )).networkResult;
+            },
+            child: const Text("Submit"));
+      },
+    );
+
     final addUser = useMutation$AddUser(
       WidgetOptions$Mutation$AddUser(update: (cache, result) {
         final user = result?.parsedData?.insert_users?.returning[0];

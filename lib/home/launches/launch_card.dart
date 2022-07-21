@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_codegen_example/home/launches/launch_card_body.dart';
+import 'package:graphql_codegen_example/home/launches/launch_card_title.dart';
 import 'package:graphql_codegen_example/home/launches/~graphql/__generated__/launches.fragments.graphql.dart';
 
-class LaunchCard extends StatefulWidget {
+class LaunchCard extends StatelessWidget {
   final Fragment$launchCard_launch launchFrag;
   const LaunchCard({Key? key, required this.launchFrag}) : super(key: key);
 
   @override
-  State<LaunchCard> createState() => _LaunchCardState();
-}
-
-class _LaunchCardState extends State<LaunchCard> {
-  @override
   Widget build(BuildContext context) {
-    final launchFrag = widget.launchFrag;
-
     String getLaunchTime() {
       final launchTime = launchFrag.launch_date_utc;
       if (launchTime != null) return "${launchTime.year}-${launchTime.month}-${launchTime.day}";
@@ -38,24 +32,7 @@ class _LaunchCardState extends State<LaunchCard> {
         child: Column(
           children: [
             ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      launchFrag.mission_name!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Text(
-                        launchFrag.rocket?.rocketName ?? "N/A",
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                ],
-              ),
+              title: LaunchCardTitle(launchFrag: launchFrag),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

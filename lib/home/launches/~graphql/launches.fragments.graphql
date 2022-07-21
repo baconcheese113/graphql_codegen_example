@@ -1,4 +1,5 @@
 fragment launchCard_launch on Launch {
+  ...launchCardTitle_launch
   ...launchCardBody_launch
   id
   launch_date_utc
@@ -6,10 +7,7 @@ fragment launchCard_launch on Launch {
     site_name_long
   }
   launch_success
-  mission_name
   rocket {
-    # just to test aliases
-    rocketName: rocket_name
     second_stage {
       payloads {
         payload_type
@@ -19,6 +17,14 @@ fragment launchCard_launch on Launch {
         payload_mass_kg
       }
     }
+  }
+}
+
+fragment launchCardTitle_launch on Launch {
+  mission_name
+  rocket {
+    # just to test aliases
+    rocketName: rocket_name
   }
 }
 
@@ -34,14 +40,14 @@ fragment launchCardBody_launch on Launch {
 }
 
 fragment launchCardPayloads_rocket on LaunchRocket {
-    rocket_name
-    second_stage {
-      payloads {
-        payload_type
-        manufacturer
-        nationality
-        reused
-        payload_mass_kg
-      }
+  rocket_name
+  second_stage {
+    payloads {
+      payload_type
+      manufacturer
+      nationality
+      reused
+      payload_mass_kg
     }
+  }
 }
