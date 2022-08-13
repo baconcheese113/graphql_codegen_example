@@ -7,17 +7,6 @@ fragment launchCard_launch on Launch {
     site_name_long
   }
   launch_success
-  rocket {
-    second_stage {
-      payloads {
-        payload_type
-        manufacturer
-        nationality
-        reused
-        payload_mass_kg
-      }
-    }
-  }
 }
 
 fragment launchCardTitle_launch on Launch {
