@@ -21,6 +21,3 @@ targets:
           # Where to put the generated types, in this case a folder in the
           # relative directory of the graphql files called __generated__
           outputDirectory: __generated__
-          # In this schema sending a null value in a mutation throws a NON-NULL
-          # violation error, this option will strip null values from Inputs
-          includeIfNullOnInput: false

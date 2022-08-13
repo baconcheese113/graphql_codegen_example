@@ -10,9 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.5+1 # If you wish to use hooks, like the ones generated for graphql operations
-  graphql: ^5.1.1
-  graphql_flutter: ^5.1.1-beta.3
-  json_annotation: ^4.6.0
+  graphql: ^5.1.2-beta.4
+  graphql_flutter: ^5.1.1-beta.4
   provider: ^6.0.3 # Using in this example for cache updating
 
 dev_dependencies:
@@ -20,8 +19,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   build_runner: ^2.2.0 # Used with graphql_codegen for generating Dart type files
-  json_serializable: ^6.3.1 # Used with graphql_codegen for generating the serializers
-  graphql_codegen: ^0.10.0-beta.7 # graphql_codegen is only used for the generation, so it isn't needed run-time
+  graphql_codegen: ^0.11.0-beta.4 # graphql_codegen is only used for the generation, so it isn't needed run-time
 
 
 
